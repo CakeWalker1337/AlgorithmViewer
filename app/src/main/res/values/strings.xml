@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Lab01</string>
+    <string name="inputDataMessage">Введите элементы массива в интервале [-100, 100] через пробел</string>
+    <string name="startButtonText">Старт</string>
+    <string name="startButtonRandomText">Старт рандомом</string>
+    <string name="modaBlockText">Мода:</string>
+</resources>
