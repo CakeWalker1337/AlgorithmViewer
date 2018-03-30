@@ -1,7 +1,31 @@
 <resources>
-    <string name="app_name">Lab01</string>
+    <string name="app_name">AlgorithmViewer</string>
     <string name="inputDataMessage">Введите элементы массива в интервале [-100, 100] через пробел</string>
     <string name="startButtonText">Старт</string>
     <string name="startButtonRandomText">Старт рандомом</string>
     <string name="modaBlockText">Мода:</string>
+    <string name="substringBlockHint">Введите образ...</string>
+    <string name="sensitivityCheckBoxString">Чувствительность к регистру</string>
+    <string name="startButtonName">Найти образ</string>
+    <string name="showLogButtonName">Открыть логи</string>
+    <string name="stringBlockHint">Введите строку...</string>
+    <string name="incorrectDataMessage">Введены некорректные данные!</string>
+    <string name="match_found">Совпадение найдено!\n</string>
+    <string name="ModaTime">Moda time:</string>
+    <string name="Moda">Moda:</string>
+    <string name="MedianaTime">Mediana time:</string>
+    <string name="DataNotFound">Данные не найдены!</string>
+    <string name="showPrevLogs">Показать логи ранее</string>
+    <string name="showNextLogs">Показать логи позднее</string>
+    <string name="logsNotFound">Логи не найдены!</string>
+    <string name="characteristicsComparing">Сравнение характеристик</string>
+    <string name="includeSort">Сортировка включением</string>
+    <string name="bubbleSort">Сортировка пузырьком</string>
+    <string name="swapsCount">Количество перестановок</string>
+    <string name="comparesCount">Количество сравнений</string>
+    <string name="wrongInputFormat">Неверный формат данных!</string>
+    <string name="incorrectFormatException">IncorrectFormat</string>
+    <string name="randomThousandNumsMessage">Случайные 1000 чисел в диапазоне [-100, 100]</string>
+    <string name="clearLogButtonName">Очистить логи</string>
+    <string name="success">Успешно!</string>
 </resources>

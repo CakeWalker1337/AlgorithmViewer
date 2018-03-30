@@ -1,42 +1,37 @@
-package com.example.maxim.algorithmviewer;
-
+package com.example.maxim.algorithmviewer.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 
-/**
- * Main class of program
- * */
-public class MainActivity extends AppCompatActivity {
-    MainPresenter pr;
-    final MainActivity ma = this;
+import com.example.maxim.algorithmviewer.controllers.Lab1Controller;
+import com.example.maxim.algorithmviewer.R;
 
-    /**
-     * Initial method of activity
-     * */
+public class ActivityLab1 extends AppCompatActivity {
+
+    Lab1Controller controller;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        pr = new MainPresenter();
+        setContentView(R.layout.activity_lab1);
+        controller = new Lab1Controller();
     }
 
     /**
      * Simple start of algorithm
      * startButton event
-     * */
+     */
     public void startButtonClick(View view) {
-        pr.Start(ma);
+        controller.start(this);
     }
 
     /**
      * Start with random elements
      * startButtonRandom event
-     * */
+     */
     public void startRandomButtonClick(View view) {
-        pr.RandomStart(ma);
+        controller.randomStart(this);
     }
+
 }

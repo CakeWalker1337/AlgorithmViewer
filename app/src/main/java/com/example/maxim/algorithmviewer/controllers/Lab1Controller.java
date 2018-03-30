@@ -1,27 +1,27 @@
-package com.example.maxim.algorithmviewer;
+package com.example.maxim.algorithmviewer.controllers;
 import android.annotation.SuppressLint;
-import android.os.Debug;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.example.maxim.algorithmviewer.R;
+import com.example.maxim.algorithmviewer.activities.ActivityLab1;
+import com.example.maxim.algorithmviewer.activities.MainActivity;
 
-import java.io.Console;
 import java.util.Objects;
 import java.util.Random;
 
 /**
  * Presenter class of main activity.
  * */
-public class MainPresenter {
+public class Lab1Controller {
 
     /**
      * Simple start function.
-     *@param MainActivity ma - activity of main screen
+     *@param ActivityLab1 ma - activity of main screen
      * */
-    @SuppressLint("DefaultLocale")
-    public void Start(MainActivity ma)
+
+    public void start(ActivityLab1 ma)
     {
         String data = ((EditText)ma.findViewById(R.id.editText)).getText().toString();
         if(Objects.equals(data, "")) return;
@@ -52,14 +52,14 @@ public class MainPresenter {
             }
         }
         Log.w("Test: ",String.format("Parsed"));
-        StartChase(ma, mass);
+        startChase(ma, mass);
     }
 
     /**
      * Random start function.
-     *@param MainActivity ma - activity of main screen
+     *@param ActivityLab1 ma - activity of main screen
      * */
-    public void RandomStart(MainActivity ma)
+    public void randomStart(ActivityLab1 ma)
     {
         Random r = new Random();
         int[] mass = new int[1000];
@@ -68,15 +68,15 @@ public class MainPresenter {
 
         ((EditText)ma.findViewById(R.id.editText)).setText("Случайные 1000 чисел в диапазоне [-100, 100]");
 
-        StartChase(ma, mass);
+        startChase(ma, mass);
     }
 
     /**
      * This function begins work of algorithms.
-     *@param MainActivity ma - activity of main screen
+     *@param ActivityLab1 ma - activity of main screen
      *@param int[] mass - data massive for computing
      * */
-    void StartChase(MainActivity ma, int[] mass)
+    void startChase(ActivityLab1 ma, int[] mass)
     {
 
         int[] slots = new int[205];
@@ -97,11 +97,11 @@ public class MainPresenter {
                 sb.append(", ").append(i-100);
         }
         sb.delete(0,2);
-        Log.w("Test: ",String.format("Moda completed"));
+        Log.w("Test: ", "Moda completed");
         TextView modaTimeTextView = (TextView)ma.findViewById(R.id.modaTimeBlock);
-        modaTimeTextView.setText("Moda time: " + String.format("%09d", System.nanoTime()-nanotime));
+        modaTimeTextView.setText(ma.getString(R.string.ModaTime) + String.format("%09d", System.nanoTime()-nanotime));
         TextView modaTextView = (TextView)ma.findViewById(R.id.modaBlock);
-        modaTextView.setText("Moda: " + sb.toString());
+        modaTextView.setText(ma.getString(R.string.Moda) + sb.toString());
         sb.setLength(0);
 
         for(i = 0; i<slots.length; i++) //clearing massive
@@ -112,7 +112,7 @@ public class MainPresenter {
         nanotime = System.nanoTime();
         for(i = 0; i<mass.length; i++) // count sort
             slots[mass[i]+100]++;
-        Log.w("Test: ",String.format("Half sorting"));
+        Log.w("Test: ","Half sorting");
         int index = 0;
         for(i = 0; i<slots.length; i++)
         {
@@ -129,9 +129,9 @@ public class MainPresenter {
         else
             sb.append(mass[mass.length/2]);
 
-        Log.w("Test: ",String.format("Mediana completed"));
+        Log.w("Test: ","Mediana completed");
 
-        ((TextView)ma.findViewById(R.id.medianaTimeBlock)).setText("Mediana time: " + String.format("%09d", System.nanoTime()-nanotime));
+        ((TextView)ma.findViewById(R.id.medianaTimeBlock)).setText(ma.getString(R.string.MedianaTime) + String.format("%09d", System.nanoTime()-nanotime));
 
 
         ((TextView)ma.findViewById(R.id.medianaBlock)).setText("Mediana: " + sb.toString());
