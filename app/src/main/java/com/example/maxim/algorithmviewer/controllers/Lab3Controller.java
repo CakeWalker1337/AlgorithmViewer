@@ -10,6 +10,7 @@ import com.example.maxim.algorithmviewer.R;
 import com.example.maxim.algorithmviewer.activities.ActivityID;
 import com.example.maxim.algorithmviewer.activities.ActivityLab3;
 import com.example.maxim.algorithmviewer.activities.LogActivity;
+import com.example.maxim.algorithmviewer.activities.SortActivity;
 import com.example.maxim.algorithmviewer.database.DatabaseHelper;
 
 import java.util.Calendar;
@@ -21,13 +22,15 @@ public class Lab3Controller {
 
     private final int NUM_OF_RANDOM_ELEMENTS = 200;
 
-    public  Lab3Controller(Context context)
-    {
+    private int[] sourceMassive = null;
+    private int[] ISSwapsCountMassive = null;
+    private int[] BSSwapsCountMassive = null;
+
+    public Lab3Controller(Context context) {
         createDatabaseTable(context);
     }
 
-    private void createDatabaseTable(Context context)
-    {
+    private void createDatabaseTable(Context context) {
         DatabaseHelper.pushNonResultQuery(context, "CREATE TABLE IF NOT EXISTS `lab3log`(`id` INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " `logTime` TEXT NOT NULL," +
                 " `sourceSequence` TEXT NOT NULL," +
@@ -40,153 +43,169 @@ public class Lab3Controller {
 
     }
 
-    public void start(ActivityLab3 ma)
-    {
-        String data = ((EditText)ma.findViewById(R.id.inputSequenceBlock)).getText().toString();
-        if(Objects.equals(data, "")) return;
+    public void start(ActivityLab3 ma) {
+        String data = ((EditText) ma.findViewById(R.id.inputSequenceBlock)).getText().toString();
+        if (Objects.equals(data, "")) return;
 
         String[] result = data.split(" ");
-        if(result.length <= 0)
-        {
-            ((TextView)ma.findViewById(R.id.statusBlock)).setText(R.string.wrongInputFormat);
+        if (result.length <= 0) {
+            ((TextView) ma.findViewById(R.id.statusBlock)).setText(R.string.wrongInputFormat);
             return;
         }
-        Log.w("Test: ",String.format("%d", result.length));
+        Log.w("Test: ", String.format("%d", result.length));
         int parseRes, i = 0, maxnum = -200, sum = 0;
         int[] mass = new int[result.length];
-        for(i = 0; i<result.length; i++)    // parsing data
+        for (i = 0; i < result.length; i++)    // parsing data
         {
-            try{
+            try {
                 parseRes = Integer.parseInt(result[i]);
-                if(parseRes >= -100 && parseRes <= 100) {
+                if (parseRes >= -100 && parseRes <= 100) {
                     mass[i] = parseRes;
-                }
-                else
+                } else
                     throw new NumberFormatException(ma.getString(R.string.incorrectFormatException));
-            }
-            catch (NumberFormatException e)
-            {
-                ((TextView)ma.findViewById(R.id.statusBlock)).setText(R.string.wrongInputFormat);
+            } catch (NumberFormatException e) {
+                ((TextView) ma.findViewById(R.id.statusBlock)).setText(R.string.wrongInputFormat);
                 return;
             }
         }
-        Log.w("Test: ",String.format("Parsed"));
+        Log.w("Test: ", String.format("Parsed"));
         startChase(ma, mass);
     }
 
     /**
      * Random start function.
-     *@param ActivityLab3 ma - activity of main screen
-     * */
-    public void randomStart(ActivityLab3 ma)
-    {
+     *
+     * @param ActivityLab3 ma - activity of main screen
+     */
+    public void randomStart(ActivityLab3 ma) {
         Random r = new Random();
         int[] mass = new int[NUM_OF_RANDOM_ELEMENTS];
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i<NUM_OF_RANDOM_ELEMENTS; i++) // random massive filling
+        for (int i = 0; i < NUM_OF_RANDOM_ELEMENTS; i++) // random massive filling
         {
             mass[i] = r.nextInt(201) - 100;
             sb.append(mass[i] + " ");
         }
-        ((EditText)ma.findViewById(R.id.inputSequenceBlock)).setText(sb.toString());
+        ((EditText) ma.findViewById(R.id.inputSequenceBlock)).setText(sb.toString());
 
         startChase(ma, mass);
     }
 
     /**
      * This function begins work of algorithms.
-     *@param ActivityLab3 ma - activity of main screen
-     *@param int[] mass - data massive for computing
-     * */
-    private void startChase(ActivityLab3 ma, int[] mass)
-    {
+     *
+     * @param ActivityLab3 ma - activity of main screen
+     * @param int[]        mass - data massive for computing
+     */
+    private void startChase(ActivityLab3 ma, int[] mass) {
+
+        ISSwapsCountMassive = new int[mass.length];
+        BSSwapsCountMassive = new int[mass.length];
+
 
         StringBuilder sequence = new StringBuilder();
-        for(int i = 0; i<mass.length; i++)
+        for (int i = 0; i < mass.length; i++)
             sequence.append(mass[i] + " ");
 
         String sourceSequence = sequence.toString();
 
         int[] copyMass = mass.clone();
-        int insertIndex, buffer, comparesCount = 0, swapsCount = 0;
+        int insertIndex, buffer, comparesCount = 0, swapsCount = 0, swapsCountBuffer = 0;
 
-        for(int i = 1; i<mass.length; i++)
-        {
+        for (int i = 1; i < mass.length; i++) {
             insertIndex = i;
             buffer = 0;
-            for(int j = 0; j<i; j++)
-            {
+            for (int j = 0; j < i; j++) {
                 comparesCount++;
-                if(mass[i] < mass[j]) {
+                if (mass[i] < mass[j]) {
                     insertIndex = j;
                     buffer = mass[i];
+                    swapsCountBuffer = ISSwapsCountMassive[i];
                     break;
                 }
             }
-            for(int k = i; k>insertIndex; k--) {
+            for (int k = i; k > insertIndex; k--) {
                 mass[k] = mass[k - 1];
+                ISSwapsCountMassive[k] = ISSwapsCountMassive[k - 1];
+                ISSwapsCountMassive[k]++;
+
                 swapsCount++;
             }
-            if(insertIndex != i) {
+            if (insertIndex != i) {
                 mass[insertIndex] = buffer;
+                ISSwapsCountMassive[insertIndex] = swapsCountBuffer;
+                ISSwapsCountMassive[insertIndex]++;
                 swapsCount++;
             }
         }
 
         sequence.setLength(0);
-        for(int i = 0; i<mass.length; i++)
+        for (int i = 0; i < mass.length; i++)
             sequence.append(mass[i] + " ");
 
         String ISSortedSequence = sequence.toString();
 
-        ((TextView)ma.findViewById(R.id.swapsCountISBlock)).setText("" + swapsCount);
-        ((TextView)ma.findViewById(R.id.comparesCountISBlock)).setText("" + comparesCount);
+        ((TextView) ma.findViewById(R.id.swapsCountISBlock)).setText("" + swapsCount);
+        ((TextView) ma.findViewById(R.id.comparesCountISBlock)).setText("" + comparesCount);
 
         int ISSwapsCount = swapsCount, ISComparesCount = comparesCount;
 
         swapsCount = 0;
         comparesCount = 0;
 
-        for(int i = 1; i<copyMass.length; i++)
-        {
-            for(int j = copyMass.length-1; j>=i; j--)
-            {
-                if(copyMass[j]<copyMass[j-1])
-                {
+        for (int i = 1; i < copyMass.length; i++) {
+            for (int j = copyMass.length - 1; j >= i; j--) {
+                if (copyMass[j] < copyMass[j - 1]) {
                     buffer = copyMass[j];
-                    copyMass[j] = copyMass[j-1];
-                    copyMass[j-1] = buffer;
+                    copyMass[j] = copyMass[j - 1];
+                    copyMass[j - 1] = buffer;
+
+                    buffer = BSSwapsCountMassive[j];
+                    BSSwapsCountMassive[j] = BSSwapsCountMassive[j - 1];
+                    BSSwapsCountMassive[j - 1] = buffer;
+                    BSSwapsCountMassive[j - 1]++;
+                    BSSwapsCountMassive[j]++;
                     swapsCount++;
                 }
                 comparesCount++;
             }
         }
 
-        ((TextView)ma.findViewById(R.id.swapsCountBSBlock)).setText("" + swapsCount);
-        ((TextView)ma.findViewById(R.id.comparesCountBSBlock)).setText("" + comparesCount);
+        ((TextView) ma.findViewById(R.id.swapsCountBSBlock)).setText("" + swapsCount);
+        ((TextView) ma.findViewById(R.id.comparesCountBSBlock)).setText("" + comparesCount);
 
         sequence.setLength(0);
-        for(int i = 0; i<copyMass.length; i++)
+        for (int i = 0; i < copyMass.length; i++)
             sequence.append(copyMass[i] + " ");
 
-        ((TextView)ma.findViewById(R.id.inputSequenceBlock)).setText(sequence.toString());
+        ((TextView) ma.findViewById(R.id.inputSequenceBlock)).setText(sequence.toString());
 
         DatabaseHelper.pushNonResultQuery(ma.getBaseContext(), "INSERT INTO `lab3log` (`logTime`, `sourceSequence`, `ISSortedSequence`, `ISSwapsCount`, `ISComparesCount`, `BSSortedSequence`, `BSSwapsCount`, `BSComparesCount`) " +
                 "VALUES ('" + Calendar.getInstance().getTime().toString() + "', '" + sourceSequence + "', '" + ISSortedSequence + "', '" + ISSwapsCount + "', '" + ISComparesCount + "', '" + sequence.toString() + "', '" + swapsCount + "', '" + comparesCount + "');");
-        ((TextView)ma.findViewById(R.id.statusBlock)).setText(R.string.success);
+        ((TextView) ma.findViewById(R.id.statusBlock)).setText(R.string.success);
+        sourceMassive = copyMass;
     }
 
-    public void showLogs(ActivityLab3 act)
-    {
+    public void showLogs(ActivityLab3 act) {
         Intent intent = new Intent(act.getBaseContext(), LogActivity.class);
         intent.putExtra("activityId", ActivityID.SIMPLE_SORT_ALGORITHMS.ordinal());
         act.startActivity(intent);
 
     }
 
-    public void clearLogs(Context context)
-    {
+    public void clearLogs(Context context) {
         DatabaseHelper.pushNonResultQuery(context, "DROP TABLE `lab3log`;");
         createDatabaseTable(context);
+    }
+
+    public void showDetails(ActivityLab3 act) {
+        if(sourceMassive == null)
+            return;
+        Intent intent = new Intent(act.getBaseContext(), SortActivity.class);
+        intent.putExtra("sourceMassive", sourceMassive);
+        intent.putExtra("firstCountMassive", ISSwapsCountMassive);
+        intent.putExtra("secondCountMassive", BSSwapsCountMassive);
+        act.startActivity(intent);
+
     }
 }

@@ -21,11 +21,15 @@
     <string name="characteristicsComparing">Сравнение характеристик</string>
     <string name="includeSort">Сортировка включением</string>
     <string name="bubbleSort">Сортировка пузырьком</string>
-    <string name="swapsCount">Количество перестановок</string>
     <string name="comparesCount">Количество сравнений</string>
     <string name="wrongInputFormat">Неверный формат данных!</string>
     <string name="incorrectFormatException">IncorrectFormat</string>
     <string name="randomThousandNumsMessage">Случайные 1000 чисел в диапазоне [-100, 100]</string>
     <string name="clearLogButtonName">Очистить логи</string>
     <string name="success">Успешно!</string>
+    <string name="element">Элемент</string>
+    <string name="swapsCount">Количество перестановок</string>
+    <string name="details">Детали</string>
+    <string name="shakerSortLabel">Шейкерная сортировка</string>
+    <string name="shellSortLabel">Сортировка Шелла</string>
 </resources>

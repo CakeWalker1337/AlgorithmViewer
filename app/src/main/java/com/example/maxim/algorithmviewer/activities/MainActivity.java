@@ -18,7 +18,7 @@ import com.example.maxim.algorithmviewer.database.DatabaseHelper;
 public class MainActivity extends AppCompatActivity {
     Lab1Controller pr;
     final int LAB_COUNT = 8;
-    String[] algorithmNames = {"Нахождение моды и медианы", "Алгоритм Бойлера-Мура", "Алгоритмы сортировки массивов"};
+    String[] algorithmNames = {"Нахождение моды и медианы", "Алгоритм Бойлера-Мура", "Алгоритмы сортировки массивов", "Улучшенные алгоритмы сортировки"};
 
 
     /**

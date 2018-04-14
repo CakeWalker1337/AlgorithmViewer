@@ -1,21 +1,26 @@
 package com.example.maxim.algorithmviewer.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.example.maxim.algorithmviewer.R;
-import com.example.maxim.algorithmviewer.controllers.Lab3Controller;
 
-public class ActivityLab3 extends AppCompatActivity {
+import com.example.maxim.algorithmviewer.controllers.Lab4Controller;
 
-    Lab3Controller controller;
+/**
+ * Created by Maxim on 12.04.2018.
+ */
+
+public class ActivityLab4 extends AppCompatActivity {
+
+    Lab4Controller controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lab3);
-        controller = new Lab3Controller(getBaseContext());
+        setContentView(R.layout.activity_lab4);
+        controller = new Lab4Controller(getBaseContext());
     }
 
     /**
@@ -41,6 +46,7 @@ public class ActivityLab3 extends AppCompatActivity {
     public void clearLogButtonClick(View view) {
         controller.clearLogs(getBaseContext());
     }
+
     public void showDetailsButtonClick(View view) {
         controller.showDetails(this);
     }

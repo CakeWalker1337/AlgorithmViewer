@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 
 import com.example.maxim.algorithmviewer.activities.ActivityID;
+import com.example.maxim.algorithmviewer.activities.ActivityLab4;
 
 public class DatabaseHelper {
 
@@ -40,82 +41,83 @@ public class DatabaseHelper {
         if (aId == ActivityID.ERROR)
             return null;
 
-        if (aId == ActivityID.BOILER_MOORE_FINDER) {
-            try {
-                Cursor query = database.rawQuery("SELECT * FROM `lab2log` WHERE `id`>=" + startPos + " and `id`<=" + endPos + ";", null);
-                if (!query.moveToFirst())
-                {
-                    query.close();
-                    return null;
-                }
-
-
-                StringBuilder sb = new StringBuilder();
-                do {
-                    sb.append(query.getInt(0) + ". ")
-                            .append(query.getString(1))
-                            .append("\nSource string: " + query.getString(2))
-                            .append("\nSubstring: " + query.getString(3))
-                            .append("\nIs sensitive: " + ((query.getInt(4) == 1) ? "Yes" : "No"))
-                            .append("\nIs found: " + ((query.getInt(5) == 1) ? "Yes" : "No") + "\n\n");
-                }
-                while (query.moveToNext());
-
+        Cursor query = database.rawQuery("SELECT * FROM " + getTableNameByActivityId(aId) +
+                " WHERE `id`>=" + startPos + " and `id`<=" + endPos + ";", null);
+        try {
+            if (!query.moveToFirst()) {
                 query.close();
-                return sb.toString();
-            } catch (SQLException e) {
-                Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
+                return null;
             }
-
+        } catch (SQLException e) {
+            Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
         }
-        if (aId == ActivityID.SIMPLE_SORT_ALGORITHMS) {
-            try {
-                Cursor query = database.rawQuery("SELECT * FROM `lab3log` WHERE `id`>=" + startPos + " and `id`<=" + endPos + ";", null);
-                if (!query.moveToFirst())
-                {
-                    query.close();
-                    return null;
-                }
 
-
-                StringBuilder sb = new StringBuilder();
+        try {
+            StringBuilder sb = new StringBuilder();
+            if (aId == ActivityID.BOILER_MOORE_FINDER) {
                 do {
                     sb.append(query.getInt(0) + ". ")
-                            .append(query.getString(1))
-                            .append("\nSource sequence: " + query.getString(2))
-                            .append("\nIS Sorted sequence: " + query.getString(3))
-                            .append("\nIS swaps count: " + query.getInt(4))
-                            .append("\nIS compares count: " + query.getInt(5))
-                            .append("\nBS Sorted sequence: " + query.getString(6))
-                            .append("\nBS swaps count: " + query.getInt(7))
-                            .append("\nBS compares count: " + query.getInt(8) + "\n\n");
+                        .append(query.getString(1))
+                        .append("\nSource string: " + query.getString(2))
+                        .append("\nSubstring: " + query.getString(3))
+                        .append("\nIs sensitive: " + ((query.getInt(4) == 1) ? "Yes" : "No"))
+                        .append("\nIs found: " + ((query.getInt(5) == 1) ? "Yes" : "No") + "\n\n");
                 }
                 while (query.moveToNext());
 
                 query.close();
                 return sb.toString();
-            } catch (SQLException e) {
-                Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
             }
 
+            if (aId == ActivityID.SIMPLE_SORT_ALGORITHMS) {
+
+                do {
+                    sb.append(query.getInt(0) + ". ")
+                        .append(query.getString(1))
+                        .append("\nSource sequence: " + query.getString(2))
+                        .append("\nIS Sorted sequence: " + query.getString(3))
+                        .append("\nIS swaps count: " + query.getInt(4))
+                        .append("\nIS compares count: " + query.getInt(5))
+                        .append("\nBS Sorted sequence: " + query.getString(6))
+                        .append("\nBS swaps count: " + query.getInt(7))
+                        .append("\nBS compares count: " + query.getInt(8) + "\n\n");
+                }
+                while (query.moveToNext());
+
+                query.close();
+                return sb.toString();
+            }
+
+            if (aId == ActivityID.ADVANCED_SORT_ALGORITHMS) {
+                do {
+                    sb.append(query.getInt(0) + ". ")
+                        .append(query.getString(1))
+                        .append("\nSource sequence: " + query.getString(2))
+                        .append("\nFirst Sorted sequence: " + query.getString(3))
+                        .append("\nFirst swaps count: " + query.getInt(4))
+                        .append("\nFirst compares count: " + query.getInt(5))
+                        .append("\nSecond Sorted sequence: " + query.getString(6))
+                        .append("\nSecond swaps count: " + query.getInt(7))
+                        .append("\nSecond compares count: " + query.getInt(8) + "\n\n");
+                }
+                while (query.moveToNext());
+
+                query.close();
+                return sb.toString();
+
+            }
+
+        } catch (SQLException e) {
+            Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
         }
         return null;
     }
 
-    public static int getCountOfLogRows(Context context, ActivityID aId)
-    {
-        String tableName = "errorname";
-        if (aId == ActivityID.ERROR)
-            return 0;
-        if (aId == ActivityID.BOILER_MOORE_FINDER)
-            tableName = "lab2log";
-        if (aId == ActivityID.SIMPLE_SORT_ALGORITHMS)
-            tableName = "lab3log";
-
+    public static int getCountOfLogRows(Context context, ActivityID aId) {
         try {
-            Cursor query = database.rawQuery("SELECT max(`id`) from " + tableName + ";", null);
-            if (!query.moveToFirst())
-            {
+            Cursor query = database.rawQuery("SELECT count(`id`) from " +
+                    getTableNameByActivityId(aId) + ";", null);
+            if (!query.moveToFirst()) {
                 query.close();
                 return 0;
             }
@@ -128,6 +130,16 @@ public class DatabaseHelper {
             Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
         }
         return 0;
+    }
+
+    public static String getTableNameByActivityId(ActivityID aId) {
+        if (aId == ActivityID.BOILER_MOORE_FINDER)
+            return "lab2log";
+        if (aId == ActivityID.SIMPLE_SORT_ALGORITHMS)
+            return "lab3log";
+        if (aId == ActivityID.ADVANCED_SORT_ALGORITHMS)
+            return "lab4log";
+        return "errorname";
     }
 
 }

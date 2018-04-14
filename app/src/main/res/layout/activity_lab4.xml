@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.maxim.algorithmviewer.activities.ActivityLab3">
+    tools:context="com.example.maxim.algorithmviewer.activities.ActivityLab4">
 
     <TextView
         android:id="@+id/infoBlock"
@@ -107,13 +107,13 @@
             <TextView
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="@string/includeSort"
+                android:text="@string/shakerSortLabel"
                 android:textAlignment="center" />
 
             <TextView
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="@string/bubbleSort"
+                android:text="@string/shellSortLabel"
                 android:textAlignment="center" />
         </TableRow>
 
@@ -138,14 +138,14 @@
             android:layout_marginTop="10dp">
 
             <TextView
+                android:id="@+id/swapsCountFirstBlock"
                 android:layout_gravity="center"
-                android:id="@+id/swapsCountISBlock"
                 android:layout_weight="1"
                 android:textAlignment="center" />
 
             <TextView
+                android:id="@+id/swapsCountSecondBlock"
                 android:layout_gravity="center"
-                android:id="@+id/swapsCountBSBlock"
                 android:layout_weight="1"
                 android:textAlignment="center" />
         </TableRow>
@@ -171,14 +171,14 @@
             android:layout_marginTop="10dp">
 
             <TextView
+                android:id="@+id/comparesCountFirstBlock"
                 android:layout_gravity="center"
-                android:id="@+id/comparesCountISBlock"
                 android:layout_weight="1"
                 android:textAlignment="center" />
 
             <TextView
+                android:id="@+id/comparesCountSecondBlock"
                 android:layout_gravity="center"
-                android:id="@+id/comparesCountBSBlock"
                 android:layout_weight="1"
                 android:textAlignment="center" />
         </TableRow>
