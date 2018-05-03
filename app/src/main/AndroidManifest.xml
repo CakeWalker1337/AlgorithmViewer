@@ -34,7 +34,12 @@
         <activity
             android:name=".activities.LogActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.SortActivity"></activity>
+        <activity android:name=".activities.SortActivity" />
+        <activity android:name=".activities.ActivityLab5" />
+        <activity android:name=".activities.ActivityLab6"
+            android:hardwareAccelerated="false">
+
+        </activity>
     </application>
 
 </manifest>

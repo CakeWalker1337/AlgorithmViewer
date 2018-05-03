@@ -15,13 +15,18 @@ public class LogActivity extends AppCompatActivity {
     private int startIndex = 0, endIndex = 0, currentCountOfRows = 0;
 
     private Button nextLogButton, prevLogButton;
-    private TextView logView;
+    private TextView logView, pageBox;
     private ActivityID currentActivityId;
+    private int page = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log);
 
+        pageBox = findViewById(R.id.pageBox);
+        page = 1;
+        pageBox.setText(getString(R.string.pageString) + " " + page);
         currentActivityId = ActivityID.values()[getIntent().getIntExtra("activityId", 0)];
 
         nextLogButton = findViewById(R.id.showNextLogButton);
@@ -31,14 +36,12 @@ public class LogActivity extends AppCompatActivity {
         prevLogButton.setEnabled(false);
 
         currentCountOfRows = DatabaseHelper.getCountOfLogRows(getBaseContext(), currentActivityId);
-        if(currentCountOfRows > 50)
+        if (currentCountOfRows > 50)
             endIndex = 50;
-        else if(currentCountOfRows == 0)
-        {
+        else if (currentCountOfRows == 0) {
             nextLogButton.setEnabled(false);
             logView.setText(R.string.logsNotFound);
-        }
-        else {
+        } else {
             nextLogButton.setEnabled(false);
             endIndex = 50;
         }
@@ -50,20 +53,24 @@ public class LogActivity extends AppCompatActivity {
     public void showNextLogButtonClick(View view) {
         startIndex += 50;
         endIndex += 50;
-        if (endIndex > currentCountOfRows){
+        page++;
+        if (endIndex > currentCountOfRows) {
             nextLogButton.setEnabled(false);
         }
         prevLogButton.setEnabled(true);
         logView.setText(DatabaseHelper.getLogs(getBaseContext(), currentActivityId, startIndex, endIndex));
+        pageBox.setText(getString(R.string.pageString) + " " + page);
     }
 
     public void showPrevLogButtonClick(View view) {
         startIndex -= 50;
         endIndex -= 50;
-        if (endIndex < 0){
+        page--;
+        if (endIndex < 0) {
             prevLogButton.setEnabled(false);
         }
         nextLogButton.setEnabled(true);
         logView.setText(DatabaseHelper.getLogs(getBaseContext(), currentActivityId, startIndex, endIndex));
+        pageBox.setText(getString(R.string.pageString) + " " + page);
     }
 }

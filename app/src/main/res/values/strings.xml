@@ -32,4 +32,7 @@
     <string name="details">Детали</string>
     <string name="shakerSortLabel">Шейкерная сортировка</string>
     <string name="shellSortLabel">Сортировка Шелла</string>
+    <string name="characteristics">Характеристики</string>
+    <string name="pageString">Страница</string>
+    <string name="clearFieldString">Очистить поле</string>
 </resources>

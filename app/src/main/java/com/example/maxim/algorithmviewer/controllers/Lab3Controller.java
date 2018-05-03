@@ -180,8 +180,13 @@ public class Lab3Controller {
 
         ((TextView) ma.findViewById(R.id.inputSequenceBlock)).setText(sequence.toString());
 
-        DatabaseHelper.pushNonResultQuery(ma.getBaseContext(), "INSERT INTO `lab3log` (`logTime`, `sourceSequence`, `ISSortedSequence`, `ISSwapsCount`, `ISComparesCount`, `BSSortedSequence`, `BSSwapsCount`, `BSComparesCount`) " +
-                "VALUES ('" + Calendar.getInstance().getTime().toString() + "', '" + sourceSequence + "', '" + ISSortedSequence + "', '" + ISSwapsCount + "', '" + ISComparesCount + "', '" + sequence.toString() + "', '" + swapsCount + "', '" + comparesCount + "');");
+        DatabaseHelper.pushNonResultQuery(ma.getBaseContext(), "INSERT INTO `lab3log` " +
+                "(`logTime`, `sourceSequence`, `ISSortedSequence`, `ISSwapsCount`," +
+                " `ISComparesCount`, `BSSortedSequence`, `BSSwapsCount`, `BSComparesCount`) " +
+                "VALUES ('" + Calendar.getInstance().getTime().toString() + "', '" +
+                sourceSequence + "', '" + ISSortedSequence + "', '" + ISSwapsCount + "', '" +
+                ISComparesCount + "', '" + sequence.toString() + "', '" + swapsCount + "', '" +
+                comparesCount + "');");
         ((TextView) ma.findViewById(R.id.statusBlock)).setText(R.string.success);
         sourceMassive = copyMass;
     }
