@@ -1,0 +1,6 @@
+<resources>
+    <declare-styleable name="CanvasAttrs">
+        <attr name="isOriented" format="boolean" />
+        <attr name="isWeightsEnabled" format="boolean" />
+    </declare-styleable>
+</resources>

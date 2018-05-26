@@ -35,4 +35,5 @@
     <string name="characteristics">Характеристики</string>
     <string name="pageString">Страница</string>
     <string name="clearFieldString">Очистить поле</string>
+    <string name="LineWeightString">Введите вес ребра...</string>
 </resources>

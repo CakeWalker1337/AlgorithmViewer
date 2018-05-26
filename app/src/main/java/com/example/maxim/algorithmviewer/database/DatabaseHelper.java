@@ -161,6 +161,34 @@ public class DatabaseHelper {
                 return sb.toString();
 
             }
+            if (aId == ActivityID.GRAPH_DJIKSTRA_ALGORITHM) {
+                do {
+                    sb.append(query.getInt(0) + ". ")
+                            .append(query.getString(1))
+                            .append("\nResult djikstra: \n" + query.getString(2))
+                            .append("\n\n");
+                }
+                while (query.moveToNext());
+
+                query.close();
+                return sb.toString();
+
+            }
+            if (aId == ActivityID.GRAPH_PRIMA_ALGORITHM) {
+                do {
+                    sb.append(query.getInt(0) + ". ")
+                            .append(query.getString(1))
+                            .append("\nStart vertex: " + query.getInt(2))
+                            .append("\nTree: \n" + query.getString(3))
+                            .append("\nTree cost: " + query.getInt(4))
+                            .append("\n\n");
+                }
+                while (query.moveToNext());
+
+                query.close();
+                return sb.toString();
+
+            }
         } catch (SQLException e) {
             Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
         }
@@ -197,6 +225,10 @@ public class DatabaseHelper {
             return "lab5log";
         if (aId == ActivityID.GRAPH_DFS_ALGORITHM)
             return "lab6log";
+        if (aId == ActivityID.GRAPH_DJIKSTRA_ALGORITHM)
+            return "lab7log";
+        if (aId == ActivityID.GRAPH_PRIMA_ALGORITHM)
+            return "lab8log";
         return "errorname";
     }
 

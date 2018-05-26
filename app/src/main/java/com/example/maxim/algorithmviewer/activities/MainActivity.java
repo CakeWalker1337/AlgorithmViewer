@@ -10,16 +10,15 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.maxim.algorithmviewer.R;
-import com.example.maxim.algorithmviewer.controllers.Lab1Controller;
 import com.example.maxim.algorithmviewer.database.DatabaseHelper;
 
 
 public class MainActivity extends AppCompatActivity {
     final int LAB_COUNT = 8;
-    Lab1Controller pr;
     String[] algorithmNames = {"Нахождение моды и медианы", "Алгоритм Бойлера-Мура",
             "Алгоритмы сортировки массивов", "Улучшенные алгоритмы сортировки",
-            "Внешняя сортировка", "Обход графов"
+            "Внешняя сортировка", "Обход графов", "Нахождение кратчайшего пути",
+            "Построение остовного дерева минимальной стоимости"
     };
 
 

@@ -9,12 +9,14 @@ import android.graphics.Paint;
 public class Line {
     private Vertex startVertex, endVertex;
     private Paint paint;
+    private int weight;
 
     public Line(Vertex startVertex, Vertex endVertex, Paint paint)
     {
         this.startVertex = startVertex;
         this.endVertex = endVertex;
         this.paint = paint;
+        this.weight = 0;
     }
 
     public void setStartVertex(Vertex startVertex){this.startVertex = startVertex;}
@@ -26,12 +28,16 @@ public class Line {
     public void setPaint(Paint paint){this.paint = paint;}
     public Paint getPaint(){return this.paint;}
 
+    public void setWeight(int weight){this.weight = weight;}
+    public int getWeight(){return this.weight;}
+
     public Line copy()
     {
         Vertex v1 = new Vertex(startVertex.getId(), startVertex.getX(), startVertex.getY(), startVertex.getRadius());
         Vertex v2 = new Vertex(endVertex.getId(), endVertex.getX(), endVertex.getY(), endVertex.getRadius());
-
-        return new Line(v1, v2, paint);
+        Line newLine = new Line(v1, v2, paint);
+        newLine.setWeight(weight);
+        return newLine;
 
     }
 

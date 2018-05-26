@@ -6,11 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/paintFrame"
-    tools:context="com.example.maxim.algorithmviewer.activities.ActivityLab6">
+    tools:context="com.example.maxim.algorithmviewer.activities.ActivityLab8">
     <com.example.maxim.algorithmviewer.model.CanvasField
         android:id="@+id/paintPlace"
         app:isOriented = "false"
-        app:isWeightsEnabled = "false"
+        app:isWeightsEnabled = "true"
         android:layout_width="match_parent"
         android:layout_weight="2"
         android:layout_height="match_parent" />
